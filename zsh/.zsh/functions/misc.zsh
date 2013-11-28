@@ -199,6 +199,17 @@ function lineSelect() {
   echo -n "${lines[$no]}"
 }
 
+function vm() {
+  case $1 in
+    on     ) shift; VBoxManage startvm $* ;;
+    off    ) shift; local vm=$1; shift; VBoxManage controlvm $vm poweroff $* ;;
+    pause  ) shift; local vm=$1; shift; VBoxManage controlvm $vm pause $* ;;
+    resume ) shift; local vm=$1; shift; VBoxManage controlvm $vm resume $* ;;
+    save   ) shift; local vm=$1; shift; VBoxManage controlvm $vm savestate $* ;;
+    *      ) shift; VBoxManage $*
+  esac
+}
+
 # Less
 LESSOPEN="|/usr/bin/lesspipe.sh %s"
 export LESSOPEN
